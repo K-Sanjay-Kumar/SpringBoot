@@ -31,12 +31,6 @@ public class UserServiceImpl implements UserService {
 		user.setPassword(encoder.encode(user.getPassword()));
 		return userRepo.save(user);
 	}
-
-	@Override
-	public List<Users> getAllUsers() {
-		// TODO Auto-generated method stub
-		return userRepo.findAll();
-	}
 	
 	@Override
 	public List<UserDTO> getAllUsersDTO() {
@@ -63,14 +57,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public Users updateUserById(Long id, Users users) {
+	public UserDTO updateUserById(Long id, Users users) {
 		// TODO Auto-generated method stub
 		Users existing = getUserById(id);
 		existing.setName(users.getName());
 		existing.setEmail(users.getEmail());
 		existing.setRole(users.getRole());
+		existing.setPassword(users.getPassword());
 		
-		return userRepo.save(existing);
+		userRepo.save(existing);
+		return userMapper.convertToDTO(existing);
 	}
 
 	@Override

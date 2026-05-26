@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.service.CategoryService;
-import com.example.ecommerce.service.CategoryServiceImpl;
 
 import jakarta.validation.Valid;
 

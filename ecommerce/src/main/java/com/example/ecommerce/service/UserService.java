@@ -7,11 +7,10 @@ import com.example.ecommerce.model.Users;
 
 public interface UserService {
 	Users saveUsers(Users users);
-	List<Users> getAllUsers();
+	List<UserDTO> getAllUsersDTO();
 	Users getUserById(Long id);
-	Users updateUserById(Long id, Users users);
+	UserDTO updateUserById(Long id, Users users);
 	void deleteUserById(Long id);
 	Users searchUser(String name);
 	UserDTO getUserByIdDTO(Long id);
-	List<UserDTO> getAllUsersDTO();
 }

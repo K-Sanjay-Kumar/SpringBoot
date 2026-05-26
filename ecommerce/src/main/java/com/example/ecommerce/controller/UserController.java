@@ -35,12 +35,7 @@ public class UserController {
 		return userService.saveUsers(users);
 	}
 	
-	@GetMapping
-	public List<Users> getAllUsers() {
-		return userService.getAllUsers();
-	}
-	
-	@GetMapping("/dto")
+	@GetMapping()
 	public List<UserDTO> getAllUsersDTO() {
 		return userService.getAllUsersDTO();
 	}
@@ -56,7 +51,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/{id}")
-	public Users updateUser(@PathVariable Long id, @RequestBody Users user) {
+	public UserDTO updateUser(@PathVariable Long id, @RequestBody Users user) {
 		return userService.updateUserById(id, user);
 	}
 	
