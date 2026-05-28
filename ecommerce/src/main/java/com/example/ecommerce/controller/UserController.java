@@ -40,11 +40,6 @@ public class UserController {
 		return userService.getAllUsersDTO();
 	}
 	
-	@GetMapping("/{id}")
-	public Users getUserById(@PathVariable Long id) {
-		return userService.getUserById(id);
-	}
-	
 	@GetMapping("/dto/{id}")
 	public UserDTO getUserDTO(@PathVariable Long id) {
 	    return userService.getUserByIdDTO(id);

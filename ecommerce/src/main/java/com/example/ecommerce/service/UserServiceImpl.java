@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 		existing.setName(users.getName());
 		existing.setEmail(users.getEmail());
 		existing.setRole(users.getRole());
-		existing.setPassword(users.getPassword());
+		existing.setPassword(encoder.encode(users.getPassword()));
 		
 		userRepo.save(existing);
 		return userMapper.convertToDTO(existing);

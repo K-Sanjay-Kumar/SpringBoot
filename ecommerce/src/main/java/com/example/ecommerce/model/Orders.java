@@ -26,7 +26,6 @@ public class Orders {
 	@JoinColumn(name="user_id")
 	private Users user;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="order", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<OrderItems> orderItems = new ArrayList<>();
 	
