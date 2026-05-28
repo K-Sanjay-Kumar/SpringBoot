@@ -16,8 +16,10 @@ public class Category {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
 	@NotEmpty(message="Enter the category name")
 	private String name;
+	
 	@NotEmpty(message="Enter the category description")
 	private String description;
 	

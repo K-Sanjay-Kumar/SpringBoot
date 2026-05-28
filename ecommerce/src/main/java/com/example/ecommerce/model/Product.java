@@ -1,21 +1,27 @@
 package com.example.ecommerce.model;
 
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Product {
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
 	@NotEmpty(message="Enter the product name")
 	private String name;
+	
 	@NotEmpty(message="Enter the product description")
 	private String description;
 	
@@ -26,6 +32,16 @@ public class Product {
 	@JoinColumn(name="category_id")
 	private Category category;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy="product")
+	private List<CartItems> cartItems;
+	
+	public List<CartItems> getCartItems() {
+		return cartItems;
+	}
+	public void setCartItems(List<CartItems> cartItems) {
+		this.cartItems = cartItems;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -62,5 +78,4 @@ public class Product {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	
 }

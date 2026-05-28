@@ -1,0 +1,25 @@
+Category
+   │
+   └── OneToMany → Products
+
+User
+   │
+   ├── OneToOne → Cart
+   │
+   └── OneToMany → Orders
+
+Cart
+   │
+   └── OneToMany → CartItems
+
+Product
+   │
+   ├── ManyToOne → Category
+   │
+   ├── OneToMany → CartItems
+   │
+   └── OneToMany → OrderItems
+
+Order
+   │
+   └── OneToMany → OrderItems
