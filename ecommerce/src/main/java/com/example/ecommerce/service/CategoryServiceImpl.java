@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ecommerce.exception.ResourceNotFoundException;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.repository.CategoryRepository;
 
-import customer_management.exceptionHandler.ResourceNotFoundException;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -46,7 +46,8 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public void deleteCategory(Long id) {
 		// TODO Auto-generated method stub
-		categoryRepo.deleteById(id);
+		Category category=getCategoryById(id);
+		categoryRepo.delete(category);
 	}
 
 }

@@ -3,6 +3,7 @@ package com.example.ecommerce.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ecommerce.exception.ResourceNotFoundException;
 import com.example.ecommerce.model.Cart;
 import com.example.ecommerce.model.CartItems;
 import com.example.ecommerce.model.Product;
@@ -30,20 +31,18 @@ public class CartServiceImpl implements CartService {
 //		checking user exists for not 
 		Users user=userService.getUserById(userId);
 		if(user==null) {
-			throw new RuntimeException("User Not Found");
+			throw new ResourceNotFoundException("User Not Found");
 		}
 		
 //		checking product
 		Product product = productService.getProductById(productId);
 
         if (product == null) {
-            throw new RuntimeException("Product not found");
+            throw new ResourceNotFoundException("Product not found");
         }
         
         if (product.getStockQuantity() < quantity) {
-            throw new RuntimeException(
-                    "Product quantity unavailable"
-            );
+            throw new ResourceNotFoundException("Product quantity unavailable");
         }
 		
 //		checking the cart exist or not for the user
@@ -74,7 +73,7 @@ public class CartServiceImpl implements CartService {
             int updatedQuantity = cartItem.getQuantity() + quantity;
 
             if (updatedQuantity > product.getStockQuantity()) {
-                throw new RuntimeException("Product quantity unavailable");
+                throw new ResourceNotFoundException("Product quantity unavailable");
             }
 
             cartItem.setQuantity(updatedQuantity);
@@ -102,7 +101,7 @@ public class CartServiceImpl implements CartService {
 		// TODO Auto-generated method stub
 		Cart cart=cartRepo.findByUserId(userId);
 		if(cart==null || cart.getCartItems().isEmpty()) {
-			throw new RuntimeException("No items in the cart");
+			throw new ResourceNotFoundException("Cart is empty");
 		}
 		return cartRepo.findByUserId(userId);
 	}
@@ -113,13 +112,13 @@ public class CartServiceImpl implements CartService {
 		Cart cart = cartRepo.findByUserId(userId);
 
         if (cart == null) {
-            throw new RuntimeException("Cart not found");
+            throw new ResourceNotFoundException("Cart is Empty");
         }
 
         CartItems cartItem =cartItemRepo.findByCartIdAndProductId(cart.getId(), productId);
 
         if (cartItem == null) {
-            throw new RuntimeException("Product not found in cart");
+            throw new ResourceNotFoundException("Product not found in cart");
         }
 
         cart.getCartItems().remove(cartItem);
@@ -140,7 +139,7 @@ public class CartServiceImpl implements CartService {
 		// TODO Auto-generated method stub
 		Cart cart=cartRepo.findByUserId(userId);
 		if(cart==null) {
-			throw new RuntimeException("Cart not Found");
+			throw new ResourceNotFoundException("Cart not Found");
 		}
 		cartRepo.deleteAll();
 	}

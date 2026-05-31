@@ -13,7 +13,7 @@ import com.example.ecommerce.mapper.UserMapper;
 import com.example.ecommerce.model.Users;
 import com.example.ecommerce.repository.UserRepository;
 
-
+import com.example.ecommerce.exception.DuplicateResourceException;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		user.setPassword(encoder.encode(user.getPassword()));
 		if(userRepo.findByEmail(user.getEmail()) != null){
-		    throw new RuntimeException("Email already exists");
+			throw new DuplicateResourceException("Email already exists");
 		}
 		userRepo.save(user);
 		return userMapper.convertToDTO(user);
@@ -76,7 +76,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void deleteUserById(Long id) {
 		// TODO Auto-generated method stub
-		userRepo.deleteById(id);
+		Users user=getUserById(id);
+		userRepo.delete(user);
 	}
 
 	@Override

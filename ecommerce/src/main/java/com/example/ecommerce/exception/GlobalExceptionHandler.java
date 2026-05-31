@@ -5,12 +5,17 @@ import java.util.Map;
 
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.http.HttpStatus;
+
+import com.example.ecommerce.exception.DuplicateResourceException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public Map<String, String> handleValidationException(MethodArgumentNotValidException ex) {
 
         Map<String, String> errors = new HashMap<>();
@@ -28,6 +33,18 @@ public class GlobalExceptionHandler {
 		Map<String, String> error=new HashMap<>();
 		error.put("error", ex.getMessage());
 		return error;
+	}
+	
+	@ExceptionHandler(DuplicateResourceException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public Map<String,String> handleDuplicateResourceException(
+	        DuplicateResourceException ex){
+
+	    Map<String,String> error = new HashMap<>();
+
+	    error.put("error", ex.getMessage());
+
+	    return error;
 	}
 	
 }

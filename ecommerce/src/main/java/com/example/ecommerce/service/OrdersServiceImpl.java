@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ecommerce.exception.ResourceNotFoundException;
 import com.example.ecommerce.model.Cart;
 import com.example.ecommerce.model.CartItems;
 import com.example.ecommerce.model.OrderItems;
@@ -28,12 +29,12 @@ public class OrdersServiceImpl implements OrdersService {
 	public Orders placeOrder(Long userId) {
 		Cart cart=cartService.getCartByUser(userId);
 		if(cart==null || cart.getCartItems().isEmpty()) {
-			throw new RuntimeException("No products in the Cart");
+			throw new ResourceNotFoundException("No products in the Cart");
 		}
 		
 		Orders order=new Orders();
 		order.setUser(cart.getUser());
-		order.setStatus("PLACED");
+		order.setStatus(Orders.OrderStatus.PLACED);
 		order.setOrderDate(LocalDateTime.now());
 		
 		double total=0;
@@ -64,7 +65,7 @@ public class OrdersServiceImpl implements OrdersService {
 	public List<Orders> getOrdersByUser(Long userId){
 		List<Orders> orders=ordersRepo.findByUserId(userId);
 		if(orders.isEmpty()) {
-			throw new RuntimeException("User did not place any order");
+			throw new ResourceNotFoundException("User did not place any order");
 		}
 		
 		return orders;
