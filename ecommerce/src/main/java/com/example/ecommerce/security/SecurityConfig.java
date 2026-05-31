@@ -17,10 +17,40 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) {
 		return http.csrf(customizer -> customizer.disable())
-				.authorizeHttpRequests(request -> 
-				request.requestMatchers("/api/ecommerce/users/register")
-				.permitAll().anyRequest().authenticated()
-				)
+				.authorizeHttpRequests(request -> request 
+					// Public APIs
+	                .requestMatchers(
+	                        "/api/ecommerce/users/register"
+	                ).permitAll()
+	                
+	                // Product APIs
+	                .requestMatchers(
+	                        "/api/ecommerce/products/add",
+	                        "/api/ecommerce/products/update/**",
+	                        "/api/ecommerce/products/delete/**"
+	                ).hasRole("ADMIN")
+	                
+	                // Category APIs
+	                .requestMatchers(
+	                        "/api/ecommerce/categories/add",
+	                        "/api/ecommerce/categories/update/**",
+	                        "/api/ecommerce/categories/delete/**"
+	                ).hasRole("ADMIN")
+	                
+	                // Cart APIs
+	                .requestMatchers(
+	                        "/api/cart/**"
+	                ).hasRole("USER")
+	                
+	                // Orders APIs
+	                .requestMatchers(
+	                        "/api/orders/**"
+	                ).hasRole("USER")
+	                
+	                // Remaining APIs
+	                .anyRequest()
+	                .authenticated()
+                )
 				.httpBasic(Customizer.withDefaults())
 				.build();
 	}

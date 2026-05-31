@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public Map<String, String> handleValidationException(
-            MethodArgumentNotValidException ex) {
+	public Map<String, String> handleValidationException(MethodArgumentNotValidException ex) {
 
         Map<String, String> errors = new HashMap<>();
 
@@ -23,6 +22,13 @@ public class GlobalExceptionHandler {
 
         return errors;
     }
+	
+	@ExceptionHandler(ResourceNotFoundException.class)
+	public Map<String, String> handleResourceNotFoundException(ResourceNotFoundException ex){
+		Map<String, String> error=new HashMap<>();
+		error.put("error", ex.getMessage());
+		return error;
+	}
 	
 }
 

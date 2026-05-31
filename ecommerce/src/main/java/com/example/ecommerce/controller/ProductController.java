@@ -18,7 +18,7 @@ import com.example.ecommerce.service.ProductService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/ecommerce/products")
 public class ProductController {
 	
 	@Autowired
@@ -29,7 +29,7 @@ public class ProductController {
 		return "Welcome to E-Commerse Products Page";
 	}
 	
-	@PostMapping
+	@PostMapping("/add")
 	public Product addProducts(@Valid @RequestBody Product product) {
 		return productService.saveAllProduct(product);
 	}
@@ -44,12 +44,12 @@ public class ProductController {
 		return productService.getProductById(id);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/update/{id}")
 	public Product updateProduct(@PathVariable Long id, @RequestBody Product product) {
 		return productService.updateProduct(id, product);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public String deleteProduct(@PathVariable Long id) {
 		productService.deleteProduct(id);
 		return "Product deleted successfully";

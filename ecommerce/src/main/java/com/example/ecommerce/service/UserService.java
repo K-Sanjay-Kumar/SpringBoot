@@ -6,7 +6,7 @@ import com.example.ecommerce.dto.UserDTO;
 import com.example.ecommerce.model.Users;
 
 public interface UserService {
-	Users saveUsers(Users users);
+	UserDTO saveUsers(Users users);
 	List<UserDTO> getAllUsersDTO();
 	Users getUserById(Long id);
 	UserDTO updateUserById(Long id, Users users);

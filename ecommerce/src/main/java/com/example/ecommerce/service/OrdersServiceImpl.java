@@ -23,9 +23,6 @@ public class OrdersServiceImpl implements OrdersService {
 	private ProductService productService;
 	
 	@Autowired
-	private UserService userService;
-	
-	@Autowired
 	private OrdersRepository ordersRepo;
 	
 	public Orders placeOrder(Long userId) {
@@ -65,12 +62,12 @@ public class OrdersServiceImpl implements OrdersService {
 	}
 	
 	public List<Orders> getOrdersByUser(Long userId){
-		Orders orders=ordersRepo.findByUserId(userId);
-		if(orders==null) {
+		List<Orders> orders=ordersRepo.findByUserId(userId);
+		if(orders.isEmpty()) {
 			throw new RuntimeException("User did not place any order");
 		}
 		
-		return userService.getUserById(userId).getOrder();
+		return orders;
 	}
 	
 }

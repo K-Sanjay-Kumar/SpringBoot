@@ -46,9 +46,9 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public Product searchProduct(String name) {
+	public List<Product> searchProduct(String name) {
 		// TODO Auto-generated method stub
-		return productRepo.findByName(name);
+		return productRepo.findByNameContainingIgnoreCase(name);
 	}
 
 	@Override

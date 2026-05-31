@@ -12,6 +12,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 
 @Entity
 public class Product {
@@ -25,7 +27,9 @@ public class Product {
 	@NotEmpty(message="Enter the product description")
 	private String description;
 	
+	@Positive
 	private double price;
+	@PositiveOrZero
 	private int stockQuantity;
 	
 	@ManyToOne

@@ -18,7 +18,7 @@ import com.example.ecommerce.service.CategoryService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/ecommerce/categories")
 public class CategoryController {
 	
 	@Autowired
@@ -29,7 +29,7 @@ public class CategoryController {
 		return "Welcome to E-Commerse Categories Page";
 	}
 	
-	@PostMapping
+	@PostMapping("/add")
 	public Category addCategories(@Valid @RequestBody Category category) {
 		return categoryService.saveCategories(category);
 	}
@@ -44,12 +44,12 @@ public class CategoryController {
 		return categoryService.getCategoryById(id);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/update/{id}")
 	public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
 		return categoryService.updateCategory(id, category);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/delete/{id}")
 	public String deleteCategory(@PathVariable Long id) {
 		categoryService.deleteCategory(id);
 		return "Category deleted successfully";

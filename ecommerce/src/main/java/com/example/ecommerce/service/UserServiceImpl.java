@@ -26,10 +26,14 @@ public class UserServiceImpl implements UserService {
 	private PasswordEncoder encoder;
 
 	@Override
-	public Users saveUsers(Users user) {
+	public UserDTO saveUsers(Users user) {
 		// TODO Auto-generated method stub
 		user.setPassword(encoder.encode(user.getPassword()));
-		return userRepo.save(user);
+		if(userRepo.findByEmail(user.getEmail()) != null){
+		    throw new RuntimeException("Email already exists");
+		}
+		userRepo.save(user);
+		return userMapper.convertToDTO(user);
 	}
 	
 	@Override

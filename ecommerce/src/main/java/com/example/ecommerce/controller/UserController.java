@@ -31,7 +31,7 @@ public class UserController {
 	}
 	
 	@PostMapping("/register")
-	public Users addUsers(@Valid @RequestBody Users users) {
+	public UserDTO addUsers(@Valid @RequestBody Users users) {
 		return userService.saveUsers(users);
 	}
 	
@@ -40,7 +40,7 @@ public class UserController {
 		return userService.getAllUsersDTO();
 	}
 	
-	@GetMapping("/dto/{id}")
+	@GetMapping("/{id}")
 	public UserDTO getUserDTO(@PathVariable Long id) {
 	    return userService.getUserByIdDTO(id);
 	}
